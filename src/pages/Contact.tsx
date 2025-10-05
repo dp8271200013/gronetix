@@ -3,36 +3,63 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Mail, Phone, MapPin, Send } from "lucide-react";
+import { Mail, Phone, MapPin, Send, CheckCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 const Contact = () => {
   const { toast } = useToast();
+  const [showSuccess, setShowSuccess] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    phone: "",
     company: "",
     message: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Form submission logic would go here
-    toast({
-      title: "Message Sent!",
-      description: "We'll get back to you within 24 hours.",
-    });
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      toast({
+        title: "Invalid Email",
+        description: "Please enter a valid email address.",
+        variant: "destructive",
+      });
+      return;
+    }
 
-    // Reset form
-    setFormData({
-      name: "",
-      email: "",
-      phone: "",
-      company: "",
-      message: "",
-    });
+    // Send to webhook
+    const webhookUrl = "YOUR_WEBHOOK_URL_HERE"; // Replace with actual webhook URL
+    try {
+      await fetch(webhookUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...formData,
+          timestamp: new Date().toISOString(),
+        }),
+      });
+
+      setShowSuccess(true);
+      setTimeout(() => setShowSuccess(false), 5000);
+
+      // Reset form
+      setFormData({
+        name: "",
+        email: "",
+        company: "",
+        message: "",
+      });
+    } catch (error) {
+      console.error("Form submission error:", error);
+      toast({
+        title: "Error",
+        description: "Failed to send message. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -45,7 +72,7 @@ const Contact = () => {
   return (
     <div className="min-h-screen pt-24">
       {/* Hero Section */}
-      <section className="py-20 bg-gradient-to-b from-surface-darker to-background">
+      <section className="py-20 bg-gradient-to-b from-surface-dark to-background">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6">
             Let's <span className="text-gradient">Connect</span>
@@ -66,7 +93,7 @@ const Contact = () => {
               <Card className="bg-card border-border hover:border-primary/50 transition-colors">
                 <CardContent className="p-6">
                   <div className="flex items-start space-x-4">
-                    <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0 glow-purple">
+                    <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0 glow-blue">
                       <Mail className="h-6 w-6 text-primary" />
                     </div>
                     <div>
@@ -81,7 +108,7 @@ const Contact = () => {
               <Card className="bg-card border-border hover:border-primary/50 transition-colors">
                 <CardContent className="p-6">
                   <div className="flex items-start space-x-4">
-                    <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0 glow-purple">
+                    <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0 glow-blue">
                       <Phone className="h-6 w-6 text-primary" />
                     </div>
                     <div>
@@ -96,7 +123,7 @@ const Contact = () => {
               <Card className="bg-card border-border hover:border-primary/50 transition-colors">
                 <CardContent className="p-6">
                   <div className="flex items-start space-x-4">
-                    <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0 glow-purple">
+                    <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0 glow-blue">
                       <MapPin className="h-6 w-6 text-primary" />
                     </div>
                     <div>
@@ -108,13 +135,13 @@ const Contact = () => {
                 </CardContent>
               </Card>
 
-              <Card className="bg-gradient-to-br from-primary/10 to-accent/10 border-primary/20">
+              <Card className="gradient-accent border-primary/20">
                 <CardContent className="p-6">
-                  <h3 className="font-semibold mb-2">24/7 Support</h3>
-                  <p className="text-muted-foreground text-sm mb-4">
+                  <h3 className="font-semibold mb-2 text-white">24/7 Support</h3>
+                  <p className="text-white/80 text-sm mb-4">
                     Need immediate assistance? Our support team is available around the clock.
                   </p>
-                  <Button variant="hero" className="w-full">
+                  <Button variant="secondary" className="w-full">
                     Contact Support
                   </Button>
                 </CardContent>
@@ -130,71 +157,61 @@ const Contact = () => {
                     Fill out the form below and we'll get back to you within 24 hours.
                   </p>
 
-                  <form onSubmit={handleSubmit} className="space-y-6">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                      <div>
-                        <label htmlFor="name" className="block text-sm font-medium mb-2">
-                          Full Name *
-                        </label>
-                        <Input
-                          id="name"
-                          name="name"
-                          type="text"
-                          required
-                          value={formData.name}
-                          onChange={handleChange}
-                          placeholder="John Doe"
-                          className="bg-background border-border focus:border-primary"
-                        />
-                      </div>
+                  {showSuccess && (
+                    <div className="mb-6 p-4 bg-primary/10 border border-primary/30 rounded-lg flex items-center space-x-3">
+                      <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
+                      <p className="text-sm">
+                        <strong>Success!</strong> Your message has been sent. We'll contact you within 24 hours.
+                      </p>
+                    </div>
+                  )}
 
-                      <div>
-                        <label htmlFor="email" className="block text-sm font-medium mb-2">
-                          Email Address *
-                        </label>
-                        <Input
-                          id="email"
-                          name="email"
-                          type="email"
-                          required
-                          value={formData.email}
-                          onChange={handleChange}
-                          placeholder="john@example.com"
-                          className="bg-background border-border focus:border-primary"
-                        />
-                      </div>
+                  <form onSubmit={handleSubmit} className="space-y-6">
+                    <div>
+                      <label htmlFor="name" className="block text-sm font-medium mb-2">
+                        Name *
+                      </label>
+                      <Input
+                        id="name"
+                        name="name"
+                        type="text"
+                        required
+                        value={formData.name}
+                        onChange={handleChange}
+                        placeholder="Your name"
+                        className="bg-background border-border focus:border-primary"
+                      />
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                      <div>
-                        <label htmlFor="phone" className="block text-sm font-medium mb-2">
-                          Phone Number
-                        </label>
-                        <Input
-                          id="phone"
-                          name="phone"
-                          type="tel"
-                          value={formData.phone}
-                          onChange={handleChange}
-                          placeholder="+1 (555) 000-0000"
-                          className="bg-background border-border focus:border-primary"
-                        />
-                      </div>
+                    <div>
+                      <label htmlFor="email" className="block text-sm font-medium mb-2">
+                        Email *
+                      </label>
+                      <Input
+                        id="email"
+                        name="email"
+                        type="email"
+                        required
+                        value={formData.email}
+                        onChange={handleChange}
+                        placeholder="you@business.com"
+                        className="bg-background border-border focus:border-primary"
+                      />
+                    </div>
 
-                      <div>
-                        <label htmlFor="company" className="block text-sm font-medium mb-2">
-                          Company Name
-                        </label>
-                        <Input
-                          id="company"
-                          name="company"
-                          type="text"
-                          value={formData.company}
-                          onChange={handleChange}
-                          placeholder="Your Company"
-                          className="bg-background border-border focus:border-primary"
-                        />
-                      </div>
+                    <div>
+                      <label htmlFor="company" className="block text-sm font-medium mb-2">
+                        Company (optional)
+                      </label>
+                      <Input
+                        id="company"
+                        name="company"
+                        type="text"
+                        value={formData.company}
+                        onChange={handleChange}
+                        placeholder="Your company"
+                        className="bg-background border-border focus:border-primary"
+                      />
                     </div>
 
                     <div>
@@ -207,14 +224,14 @@ const Contact = () => {
                         required
                         value={formData.message}
                         onChange={handleChange}
-                        placeholder="Tell us about your project and how we can help..."
+                        placeholder="Tell us what you want automated — e.g., social posting, invoices"
                         rows={6}
                         className="bg-background border-border focus:border-primary resize-none"
                       />
                     </div>
 
                     <Button type="submit" variant="hero" size="lg" className="w-full">
-                      Send Message
+                      Book a demo
                       <Send className="ml-2 h-5 w-5" />
                     </Button>
 

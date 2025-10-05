@@ -49,11 +49,15 @@ export default {
           foreground: "hsl(var(--card-foreground))",
         },
         glow: {
+          blue: "hsl(var(--glow-blue))",
           purple: "hsl(var(--glow-purple))",
+        },
+        magenta: {
+          DEFAULT: "hsl(var(--magenta))",
         },
         surface: {
           dark: "hsl(var(--surface-dark))",
-          darker: "hsl(var(--surface-darker))",
+          light: "hsl(var(--surface-light))",
         },
       },
       borderRadius: {

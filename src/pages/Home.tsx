@@ -2,35 +2,33 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowRight, Sparkles, Globe, Zap, MessageSquare } from "lucide-react";
-import heroImage from "@/assets/hero-bg.jpg";
-import aiAutomation from "@/assets/ai-automation.jpg";
-import webDev from "@/assets/web-dev.jpg";
+import heroImage from "@/assets/hero-business-owner.jpg";
+import serviceWebDev from "@/assets/service-web-dev.jpg";
+import serviceAI from "@/assets/service-ai-automation.jpg";
+import serviceSocial from "@/assets/service-social-media.jpg";
 
 const Home = () => {
   const services = [
     {
       icon: Globe,
-      title: "Website Development",
-      description: "Fast, responsive, and user-friendly websites that convert visitors into customers.",
-      image: webDev,
+      title: "Website Building",
+      description: "Mobile-first websites in days — SEO-ready, fast, and easy for customers.",
+      image: serviceWebDev,
+      alt: "Modern website development dashboard showing responsive design across multiple devices",
     },
     {
       icon: Sparkles,
-      title: "AI Automation",
-      description: "Automate social posting, invoices, receipts, chatbots, and more with cutting-edge AI.",
-      image: aiAutomation,
+      title: "AI Automations",
+      description: "Automate invoices, social posting, replies, and GST/billing so repetitive tasks run themselves.",
+      image: serviceAI,
+      alt: "AI automation dashboard with chatbot and workflow automation interfaces",
     },
     {
       icon: MessageSquare,
       title: "Social Media Management",
-      description: "Engage your audience with consistent, AI-powered social media strategies.",
-      image: aiAutomation,
-    },
-    {
-      icon: Zap,
-      title: "Business Digitalization",
-      description: "Transform your operations with complete digital solutions tailored to your needs.",
-      image: webDev,
+      description: "Strategy + posting + analytics — consistent presence without the hassle.",
+      image: serviceSocial,
+      alt: "Social media management dashboard showing analytics and content scheduling",
     },
   ];
 
@@ -57,14 +55,15 @@ const Home = () => {
           </div>
           
           <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-6 leading-tight">
-            Scale Your Business
+            Scale your small business —
             <br />
-            <span className="text-gradient">Like a Giant</span>
+            <span className="text-gradient">fast websites & AI automations</span>
+            <br />
+            built for growth
           </h1>
 
           <p className="text-lg sm:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-            We help small businesses compete with large corporations through sleek web design, 
-            AI automation, and digital transformation — fast, smart, and affordable.
+            Get a premium website, hands-off automation, and social management — all without the agency price.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
@@ -111,7 +110,7 @@ const Home = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {services.map((service, index) => {
               const Icon = service.icon;
               return (
@@ -119,20 +118,22 @@ const Home = () => {
                   key={index}
                   className="group bg-card border-border hover:border-primary/50 transition-all duration-300 hover:shadow-xl hover:shadow-primary/10 overflow-hidden"
                 >
-                  <div
-                    className="h-48 bg-cover bg-center relative"
-                    style={{ backgroundImage: `url(${service.image})` }}
-                  >
+                  <div className="h-48 bg-cover bg-center relative overflow-hidden">
+                    <img 
+                      src={service.image} 
+                      alt={service.alt}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                    />
                     <div className="absolute inset-0 bg-gradient-to-b from-transparent to-card" />
                   </div>
                   <CardContent className="p-6">
                     <div className="flex items-start space-x-4">
-                      <div className="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/20 transition-colors glow-purple">
+                      <div className="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/20 transition-colors glow-blue">
                         <Icon className="h-6 w-6 text-primary" />
                       </div>
                       <div className="flex-1">
                         <h3 className="text-xl font-semibold mb-2">{service.title}</h3>
-                        <p className="text-muted-foreground">{service.description}</p>
+                        <p className="text-muted-foreground text-sm">{service.description}</p>
                       </div>
                     </div>
                   </CardContent>

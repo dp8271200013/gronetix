@@ -8,75 +8,79 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* SCALESTACK Design System - Dark Premium with Electric Purple */
-    --background: 0 0% 4%;
-    --foreground: 0 0% 98%;
+    /* SCALESTACK Design System - Balanced Modern with Electric Accents */
+    --background: 216 35% 11%;  /* Charcoal #0F1724 */
+    --foreground: 210 20% 98%;  /* Soft White #F7F8FA */
 
-    --card: 0 0% 8%;
-    --card-foreground: 0 0% 98%;
+    --card: 210 20% 98%;  /* Soft White #F7F8FA */
+    --card-foreground: 216 35% 11%;  /* Charcoal */
 
-    --popover: 0 0% 6%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 210 20% 98%;
+    --popover-foreground: 216 35% 11%;
 
-    /* Electric Purple Primary */
-    --primary: 262 83% 58%;
+    /* Electric Blue Primary */
+    --primary: 199 100% 50%;  /* Electric Blue #00A3FF */
     --primary-foreground: 0 0% 100%;
-    --primary-glow: 262 83% 68%;
+    --primary-glow: 199 100% 60%;
 
-    /* Dark Secondary */
-    --secondary: 0 0% 12%;
-    --secondary-foreground: 0 0% 98%;
+    /* Light Secondary */
+    --secondary: 210 17% 93%;  /* Light Gray #E6E9EE */
+    --secondary-foreground: 216 35% 11%;
 
-    --muted: 0 0% 15%;
-    --muted-foreground: 0 0% 65%;
+    --muted: 210 17% 93%;  /* Light Gray #E6E9EE */
+    --muted-foreground: 216 20% 40%;
 
-    /* Purple Accent */
-    --accent: 270 80% 65%;
+    /* Electric Purple Accent */
+    --accent: 274 100% 56%;  /* Electric Purple #8A2BE2 */
     --accent-foreground: 0 0% 100%;
+
+    /* Magenta Highlight */
+    --magenta: 325 100% 64%;  /* Magenta #FF4DA6 */
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 18%;
-    --input: 0 0% 18%;
-    --ring: 262 83% 58%;
+    --border: 210 17% 90%;
+    --input: 210 17% 90%;
+    --ring: 199 100% 50%;
 
     --radius: 0.75rem;
 
     /* Custom tokens for SCALESTACK */
-    --glow-purple: 262 100% 70%;
-    --surface-dark: 0 0% 6%;
-    --surface-darker: 0 0% 3%;
+    --glow-blue: 199 100% 60%;
+    --glow-purple: 274 100% 66%;
+    --surface-dark: 216 35% 11%;
+    --surface-light: 210 20% 98%;
   }
 
   .dark {
-    --background: 0 0% 4%;
-    --foreground: 0 0% 98%;
+    --background: 216 35% 11%;
+    --foreground: 210 20% 98%;
 
-    --card: 0 0% 8%;
-    --card-foreground: 0 0% 98%;
+    --card: 216 30% 14%;
+    --card-foreground: 210 20% 98%;
 
-    --popover: 0 0% 6%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 216 30% 14%;
+    --popover-foreground: 210 20% 98%;
 
-    --primary: 262 83% 58%;
+    --primary: 199 100% 50%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 0 0% 12%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 216 25% 18%;
+    --secondary-foreground: 210 20% 98%;
 
-    --muted: 0 0% 15%;
-    --muted-foreground: 0 0% 65%;
+    --muted: 216 25% 20%;
+    --muted-foreground: 210 15% 65%;
 
-    --accent: 270 80% 65%;
+    --accent: 274 100% 56%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 18%;
-    --input: 0 0% 18%;
-    --ring: 262 83% 58%;
+    --border: 216 25% 22%;
+    --input: 216 25% 22%;
+    --ring: 199 100% 50%;
   }
 }
 
@@ -96,6 +100,10 @@ All colors MUST be HSL.
 }
 
 @layer utilities {
+  .glow-blue {
+    box-shadow: 0 0 20px hsl(var(--glow-blue) / 0.4), 0 0 40px hsl(var(--glow-blue) / 0.2);
+  }
+
   .glow-purple {
     box-shadow: 0 0 20px hsl(var(--glow-purple) / 0.3), 0 0 40px hsl(var(--glow-purple) / 0.15);
   }
@@ -105,10 +113,14 @@ All colors MUST be HSL.
   }
 
   .text-gradient {
-    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--accent)) 100%);
+    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--accent)) 50%, hsl(var(--magenta)) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+  }
+
+  .gradient-accent {
+    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--accent)) 100%);
   }
 
   .animate-fade-in {

@@ -1,18 +1,17 @@
 import { Link } from "react-router-dom";
 import { Mail, Phone, MapPin } from "lucide-react";
+import logoOptionA from "@/assets/logo-option-a.png";
 
 const Footer = () => {
   return (
-    <footer className="bg-surface-darker border-t border-border">
+    <footer className="bg-surface-dark border-t border-border">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand */}
           <div className="space-y-4">
-            <div className="flex items-center space-x-2">
-              <div className="flex items-center justify-center w-10 h-10 bg-primary rounded-lg glow-purple">
-                <span className="text-2xl font-bold text-primary-foreground">SS</span>
-              </div>
-              <span className="text-xl font-bold text-gradient">SCALESTACK</span>
+            <div className="flex items-center space-x-3">
+              <img src={logoOptionA} alt="SCALESTACK logo" className="h-10 w-10" />
+              <span className="text-xl font-bold">SCALESTACK</span>
             </div>
             <p className="text-muted-foreground text-sm">
               CREATE. AUTOMATE. SCALE.
