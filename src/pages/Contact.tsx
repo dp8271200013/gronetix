@@ -96,11 +96,10 @@ const Contact = () => {
                     <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0 glow-blue">
                       <Mail className="h-6 w-6 text-primary" />
                     </div>
-                    <div>
-                      <h3 className="font-semibold mb-2">Email Us</h3>
-                      <p className="text-muted-foreground text-sm">info@scalestack.com</p>
-                      <p className="text-muted-foreground text-sm">support@scalestack.com</p>
-                    </div>
+                  <div>
+                    <h3 className="font-semibold mb-2">Email Us</h3>
+                    <p className="text-muted-foreground text-sm">dp605702@gmail.com</p>
+                  </div>
                   </div>
                 </CardContent>
               </Card>
@@ -126,11 +125,10 @@ const Contact = () => {
                     <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0 glow-blue">
                       <MapPin className="h-6 w-6 text-primary" />
                     </div>
-                    <div>
-                      <h3 className="font-semibold mb-2">Visit Us</h3>
-                      <p className="text-muted-foreground text-sm">Digital Hub</p>
-                      <p className="text-muted-foreground text-sm">Tech City, Innovation District</p>
-                    </div>
+                  <div>
+                    <h3 className="font-semibold mb-2">Visit Us</h3>
+                    <p className="text-muted-foreground text-sm">Baru Sahib</p>
+                  </div>
                   </div>
                 </CardContent>
               </Card>

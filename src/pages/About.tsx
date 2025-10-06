@@ -31,11 +31,11 @@ const About = () => {
       <section className="py-20 bg-gradient-to-b from-surface-darker to-background">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6">
-            About <span className="text-gradient">SCALESTACK</span>
+            About <span className="text-gradient">GRONETIX</span>
           </h1>
           <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto">
             We believe every small business deserves access to the same powerful digital tools 
-            that large corporations use. That's why we created SCALESTACK.
+            that large corporations use. That's why we created GRONETIX.
           </p>
         </div>
       </section>
@@ -49,7 +49,7 @@ const About = () => {
                 <h2 className="text-3xl font-bold mb-6 text-gradient">Our Story</h2>
                 <div className="space-y-4 text-muted-foreground leading-relaxed">
                   <p>
-                    SCALESTACK was born from a simple observation: small businesses were being left 
+                    GRONETIX was born from a simple observation: small businesses were being left 
                     behind in the digital revolution. While large corporations invested millions in 
                     automation, AI, and digital infrastructure, small business owners struggled with 
                     outdated systems and limited resources.
@@ -59,7 +59,7 @@ const About = () => {
                     solutions to businesses of all sizes — without the enterprise price tag or complexity.
                   </p>
                   <p>
-                    Today, SCALESTACK helps businesses transform their operations through sleek web 
+                    Today, GRONETIX helps businesses transform their operations through sleek web 
                     design, intelligent automation, and strategic digital solutions. We're not just 
                     a service provider; we're your partner in growth.
                   </p>
@@ -116,7 +116,7 @@ const About = () => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-3xl sm:text-4xl font-bold mb-12 text-center">
-              Why Choose <span className="text-gradient">SCALESTACK?</span>
+              Why Choose <span className="text-gradient">GRONETIX?</span>
             </h2>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { Mail, Phone, MapPin } from "lucide-react";
-import logoOptionA from "@/assets/logo-option-a.png";
 
 const Footer = () => {
   return (
@@ -9,9 +8,8 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand */}
           <div className="space-y-4">
-            <div className="flex items-center space-x-3">
-              <img src={logoOptionA} alt="SCALESTACK logo" className="h-10 w-10" />
-              <span className="text-xl font-bold">SCALESTACK</span>
+            <div className="flex items-center">
+              <span className="text-xl font-bold">GRONETIX</span>
             </div>
             <p className="text-muted-foreground text-sm">
               CREATE. AUTOMATE. SCALE.
@@ -41,8 +39,8 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/blog" className="text-muted-foreground hover:text-primary transition-colors">
-                  Blog
+                <Link to="/templates" className="text-muted-foreground hover:text-primary transition-colors">
+                  Templates
                 </Link>
               </li>
             </ul>
@@ -65,7 +63,7 @@ const Footer = () => {
             <ul className="space-y-3">
               <li className="flex items-center space-x-2 text-muted-foreground text-sm">
                 <Mail className="h-4 w-4 text-primary" />
-                <span>info@scalestack.com</span>
+                <span>dp605702@gmail.com</span>
               </li>
               <li className="flex items-center space-x-2 text-muted-foreground text-sm">
                 <Phone className="h-4 w-4 text-primary" />
@@ -73,14 +71,14 @@ const Footer = () => {
               </li>
               <li className="flex items-center space-x-2 text-muted-foreground text-sm">
                 <MapPin className="h-4 w-4 text-primary" />
-                <span>Digital Hub, Tech City</span>
+                <span>Baru Sahib</span>
               </li>
             </ul>
           </div>
         </div>
 
         <div className="border-t border-border mt-8 pt-8 text-center text-muted-foreground text-sm">
-          <p>&copy; 2025 SCALESTACK. All rights reserved.</p>
+          <p>&copy; 2025 GRONETIX. All rights reserved.</p>
         </div>
       </div>
     </footer>

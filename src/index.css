@@ -8,14 +8,14 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* SCALESTACK Design System - Balanced Modern with Electric Accents */
-    --background: 216 35% 11%;  /* Charcoal #0F1724 */
-    --foreground: 210 20% 98%;  /* Soft White #F7F8FA */
+    /* GRONETIX Design System - Light Mode */
+    --background: 210 20% 98%;  /* Soft White #F7F8FA */
+    --foreground: 216 35% 11%;  /* Charcoal #0F1724 */
 
-    --card: 210 20% 98%;  /* Soft White #F7F8FA */
+    --card: 0 0% 100%;  /* Pure White */
     --card-foreground: 216 35% 11%;  /* Charcoal */
 
-    --popover: 210 20% 98%;
+    --popover: 0 0% 100%;
     --popover-foreground: 216 35% 11%;
 
     /* Electric Blue Primary */
@@ -40,22 +40,23 @@ All colors MUST be HSL.
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 210 17% 90%;
-    --input: 210 17% 90%;
+    --border: 210 17% 88%;
+    --input: 210 17% 88%;
     --ring: 199 100% 50%;
 
     --radius: 0.75rem;
 
-    /* Custom tokens for SCALESTACK */
+    /* Custom tokens for GRONETIX */
     --glow-blue: 199 100% 60%;
     --glow-purple: 274 100% 66%;
-    --surface-dark: 216 35% 11%;
-    --surface-light: 210 20% 98%;
+    --surface-dark: 210 17% 95%;
+    --surface-light: 0 0% 100%;
   }
 
   .dark {
-    --background: 216 35% 11%;
-    --foreground: 210 20% 98%;
+    /* GRONETIX Design System - Dark Mode */
+    --background: 216 35% 11%;  /* Charcoal #0F1724 */
+    --foreground: 210 20% 98%;  /* Soft White #F7F8FA */
 
     --card: 216 30% 14%;
     --card-foreground: 210 20% 98%;
@@ -63,8 +64,9 @@ All colors MUST be HSL.
     --popover: 216 30% 14%;
     --popover-foreground: 210 20% 98%;
 
-    --primary: 199 100% 50%;
+    --primary: 199 100% 50%;  /* Electric Blue */
     --primary-foreground: 0 0% 100%;
+    --primary-glow: 199 100% 60%;
 
     --secondary: 216 25% 18%;
     --secondary-foreground: 210 20% 98%;
@@ -72,8 +74,10 @@ All colors MUST be HSL.
     --muted: 216 25% 20%;
     --muted-foreground: 210 15% 65%;
 
-    --accent: 274 100% 56%;
+    --accent: 274 100% 56%;  /* Electric Purple */
     --accent-foreground: 0 0% 100%;
+
+    --magenta: 325 100% 64%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
@@ -81,6 +85,11 @@ All colors MUST be HSL.
     --border: 216 25% 22%;
     --input: 216 25% 22%;
     --ring: 199 100% 50%;
+
+    --glow-blue: 199 100% 60%;
+    --glow-purple: 274 100% 66%;
+    --surface-dark: 216 30% 14%;
+    --surface-light: 216 25% 18%;
   }
 }
 

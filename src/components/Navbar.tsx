@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "./ui/button";
-import logoOptionA from "@/assets/logo-option-a.png";
+import { ThemeToggle } from "./ThemeToggle";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -13,23 +13,18 @@ const Navbar = () => {
     { name: "About", path: "/about" },
     { name: "Services", path: "/services" },
     { name: "Blog", path: "/blog" },
-    { name: "Testimonials", path: "/testimonials" },
+    { name: "Templates", path: "/templates" },
   ];
 
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <nav className="fixed top-0 w-full bg-surface-dark/80 backdrop-blur-lg border-b border-border z-50">
+    <nav className="fixed top-0 w-full bg-background/80 backdrop-blur-lg border-b border-border z-50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <Link to="/" className="flex items-center space-x-3 group">
-            <img 
-              src={logoOptionA} 
-              alt="SCALESTACK logo" 
-              className="h-10 w-10 group-hover:scale-110 transition-transform" 
-            />
-            <span className="text-xl font-bold hidden sm:block">SCALESTACK</span>
+          {/* Brand */}
+          <Link to="/" className="flex items-center group">
+            <span className="text-xl font-bold group-hover:text-primary transition-colors">GRONETIX</span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -46,8 +41,9 @@ const Navbar = () => {
             ))}
           </div>
 
-          {/* CTA Button */}
-          <div className="hidden md:block">
+          {/* CTA Button & Theme Toggle */}
+          <div className="hidden md:flex items-center space-x-2">
+            <ThemeToggle />
             <Link to="/contact">
               <Button variant="hero" size="lg">
                 Book a Demo
@@ -55,13 +51,16 @@ const Navbar = () => {
             </Link>
           </div>
 
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden text-foreground"
-            onClick={() => setIsOpen(!isOpen)}
-          >
-            {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-          </button>
+          {/* Mobile Menu Button & Theme Toggle */}
+          <div className="md:hidden flex items-center space-x-2">
+            <ThemeToggle />
+            <button
+              className="text-foreground"
+              onClick={() => setIsOpen(!isOpen)}
+            >
+              {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            </button>
+          </div>
         </div>
       </div>
 

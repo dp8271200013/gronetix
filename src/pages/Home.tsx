@@ -83,12 +83,12 @@ const Home = () => {
           {/* Stats */}
           <div className="grid grid-cols-3 gap-8 mt-20 max-w-3xl mx-auto">
             <div className="text-center animate-slide-up">
-              <div className="text-3xl sm:text-4xl font-bold text-gradient mb-2">100+</div>
-              <div className="text-sm text-muted-foreground">Projects Delivered</div>
+              <div className="text-3xl sm:text-4xl font-bold text-gradient mb-2">Hours</div>
+              <div className="text-sm text-muted-foreground">Not Days or Weeks</div>
             </div>
             <div className="text-center animate-slide-up" style={{ animationDelay: "0.1s" }}>
-              <div className="text-3xl sm:text-4xl font-bold text-gradient mb-2">50+</div>
-              <div className="text-sm text-muted-foreground">Happy Clients</div>
+              <div className="text-3xl sm:text-4xl font-bold text-gradient mb-2">Fast</div>
+              <div className="text-sm text-muted-foreground">Results Delivered</div>
             </div>
             <div className="text-center animate-slide-up" style={{ animationDelay: "0.2s" }}>
               <div className="text-3xl sm:text-4xl font-bold text-gradient mb-2">24/7</div>
@@ -161,7 +161,7 @@ const Home = () => {
             Ready to <span className="text-gradient">Scale?</span>
           </h2>
           <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Join the businesses that are already transforming with SCALESTACK. 
+            Join the businesses that are already transforming with GRONETIX. 
             Book a free demo and see how we can help you grow.
           </p>
           <Link to="/contact">
