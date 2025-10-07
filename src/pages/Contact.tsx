@@ -5,6 +5,16 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Mail, Phone, MapPin, Send, CheckCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
+import { z } from "zod";
+
+// Zod validation schema
+const contactFormSchema = z.object({
+  name: z.string().trim().min(1, "Name is required").max(100, "Name must be less than 100 characters"),
+  email: z.string().trim().email("Invalid email address").max(255, "Email must be less than 255 characters"),
+  company: z.string().trim().max(100, "Company name must be less than 100 characters").optional(),
+  message: z.string().trim().min(1, "Message is required").max(1000, "Message must be less than 1000 characters"),
+});
 
 const Contact = () => {
   const { toast } = useToast();
@@ -19,28 +29,23 @@ const Contact = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Validate email format
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formData.email)) {
-      toast({
-        title: "Invalid Email",
-        description: "Please enter a valid email address.",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    // Send to webhook
-    const webhookUrl = "YOUR_WEBHOOK_URL_HERE"; // Replace with actual webhook URL
+    // Validate form data with Zod
     try {
-      await fetch(webhookUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...formData,
-          timestamp: new Date().toISOString(),
-        }),
-      });
+      const validatedData = contactFormSchema.parse(formData);
+
+      // Insert into Supabase
+      const { error } = await supabase
+        .from("contact_submissions")
+        .insert({
+          name: validatedData.name,
+          email: validatedData.email,
+          company: validatedData.company || null,
+          message: validatedData.message,
+        });
+
+      if (error) {
+        throw error;
+      }
 
       setShowSuccess(true);
       setTimeout(() => setShowSuccess(false), 5000);
@@ -52,13 +57,28 @@ const Contact = () => {
         company: "",
         message: "",
       });
-    } catch (error) {
-      console.error("Form submission error:", error);
+
       toast({
-        title: "Error",
-        description: "Failed to send message. Please try again.",
-        variant: "destructive",
+        title: "Success!",
+        description: "Your message has been sent. We'll contact you within 24 hours.",
       });
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        // Handle validation errors
+        const firstError = error.errors[0];
+        toast({
+          title: "Validation Error",
+          description: firstError.message,
+          variant: "destructive",
+        });
+      } else {
+        console.error("Form submission error:", error);
+        toast({
+          title: "Error",
+          description: "Failed to send message. Please try again.",
+          variant: "destructive",
+        });
+      }
     }
   };
 
