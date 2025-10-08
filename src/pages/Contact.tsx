@@ -33,15 +33,15 @@ const Contact = () => {
     try {
       const validatedData = contactFormSchema.parse(formData);
 
-      // Insert into Supabase
-      const { error } = await supabase
-        .from("contact_submissions")
-        .insert({
+      // Send email via edge function
+      const { error } = await supabase.functions.invoke("send-contact-email", {
+        body: {
           name: validatedData.name,
           email: validatedData.email,
-          company: validatedData.company || null,
+          company: validatedData.company || undefined,
           message: validatedData.message,
-        });
+        },
+      });
 
       if (error) {
         throw error;
