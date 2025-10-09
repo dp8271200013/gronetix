@@ -197,7 +197,7 @@ const Services = () => {
                 Ready to Get Started?
               </h2>
               <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-                Book a free consultation and discover how GRONETIX can transform your business.
+                Book a free consultation and discover how GROWNETIX can transform your business.
               </p>
               <Link to="/contact">
                 <Button variant="hero" size="xl">

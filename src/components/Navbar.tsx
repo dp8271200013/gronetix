@@ -24,7 +24,7 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-16">
           {/* Brand */}
           <Link to="/" className="flex items-center group">
-            <span className="text-xl font-bold group-hover:text-primary transition-colors">GRONETIX</span>
+            <span className="text-xl font-bold group-hover:text-primary transition-colors">GROWNETIX</span>
           </Link>
 
           {/* Desktop Navigation */}

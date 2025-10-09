@@ -9,7 +9,7 @@ const Footer = () => {
           {/* Brand */}
           <div className="space-y-4">
             <div className="flex items-center">
-              <span className="text-xl font-bold">GRONETIX</span>
+              <span className="text-xl font-bold">GROWNETIX</span>
             </div>
             <p className="text-muted-foreground text-sm">
               CREATE. AUTOMATE. SCALE.
@@ -78,7 +78,7 @@ const Footer = () => {
         </div>
 
         <div className="border-t border-border mt-8 pt-8 text-center text-muted-foreground text-sm">
-          <p>&copy; 2025 GRONETIX. All rights reserved.</p>
+          <p>&copy; 2025 GROWNETIX. All rights reserved.</p>
         </div>
       </div>
     </footer>

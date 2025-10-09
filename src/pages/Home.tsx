@@ -161,7 +161,7 @@ const Home = () => {
             Ready to <span className="text-gradient">Scale?</span>
           </h2>
           <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Join the businesses that are already transforming with GRONETIX. 
+            Join the businesses that are already transforming with GROWNETIX. 
             Book a free demo and see how we can help you grow.
           </p>
           <Link to="/contact">

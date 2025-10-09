@@ -32,7 +32,7 @@ export const blogPosts = [
       <p>AI can analyze sales patterns, predict inventory needs, identify growth opportunities, and spot potential problems before they become critical. Get actionable insights without hiring a data analyst.</p>
 
       <h3>Getting Started</h3>
-      <p>The key is to start small. Pick one repetitive task that consumes your time and automate it. Once you see the benefits, expand to other areas. At GRONETIX, we help businesses identify the best automation opportunities and implement solutions that deliver results in hours, not days or weeks.</p>
+      <p>The key is to start small. Pick one repetitive task that consumes your time and automate it. Once you see the benefits, expand to other areas. At GROWNETIX, we help businesses identify the best automation opportunities and implement solutions that deliver results in hours, not days or weeks.</p>
     `
   },
   {
@@ -64,7 +64,7 @@ export const blogPosts = [
       <h3>Common Pitfalls to Avoid</h3>
       <p>Don't try to digitalize everything at once. Don't choose tools just because they're popular—pick what solves your specific problems. And don't skip data security—protect customer information from day one.</p>
 
-      <h3>The GRONETIX Approach</h3>
+      <h3>The GROWNETIX Approach</h3>
       <p>We believe digitalization should be simple, not overwhelming. We help you identify quick wins, implement proven solutions, and see results fast—usually in hours, not days or weeks. Your business deserves enterprise-level digital tools without the complexity or cost.</p>
     `
   },
@@ -97,7 +97,7 @@ export const blogPosts = [
       <h3>How to Get Started Without Breaking the Bank</h3>
       <p>Building a modern website doesn't require a six-month timeline or enterprise budget. With the right approach, you can have a professional, high-performing site up and running quickly. Focus on clarity, speed, and user experience over flashy features.</p>
 
-      <h3>The GRONETIX Promise</h3>
+      <h3>The GROWNETIX Promise</h3>
       <p>We build mobile-first websites that are SEO-ready, blazing fast, and designed to convert visitors into customers. Our process delivers professional results in hours, not days or weeks—because your business can't afford to wait.</p>
     `
   },
@@ -131,7 +131,7 @@ export const blogPosts = [
       <p>Automation handles the mechanics, but your personality drives engagement. Respond personally to comments, share behind-the-scenes content, and engage authentically with your community. Automation gives you time for these meaningful interactions.</p>
 
       <h3>Getting Started Today</h3>
-      <p>At GRONETIX, we set up complete social media automation systems that maintain your presence while giving you back hours every week. Our solutions deliver results in hours, not days or weeks—because consistent social media presence shouldn't consume your life.</p>
+      <p>At GROWNETIX, we set up complete social media automation systems that maintain your presence while giving you back hours every week. Our solutions deliver results in hours, not days or weeks—because consistent social media presence shouldn't consume your life.</p>
     `
   },
   {
@@ -167,7 +167,7 @@ export const blogPosts = [
       <p>Don't pick tools because they're cheap—calculate the cost of lost time and missed opportunities. Don't wait until you "need" something—by then, you're already behind. And don't choose tools that don't integrate—disconnected systems create more work, not less.</p>
 
       <h3>Your Growth Partner</h3>
-      <p>At GRONETIX, we help startups implement the right digital infrastructure from day one. We focus on tools that scale with you, integrate seamlessly, and deliver results in hours, not days or weeks. Your growth shouldn't be limited by outdated systems.</p>
+      <p>At GROWNETIX, we help startups implement the right digital infrastructure from day one. We focus on tools that scale with you, integrate seamlessly, and deliver results in hours, not days or weeks. Your growth shouldn't be limited by outdated systems.</p>
     `
   },
   {
@@ -202,7 +202,7 @@ export const blogPosts = [
       <h3>Implementation Best Practices</h3>
       <p>Start with clearly defined use cases. Train the chatbot with your actual customer FAQs. Set proper expectations—users should know they're talking to a bot. Monitor conversations regularly and refine responses. Always provide an easy path to human support.</p>
 
-      <h3>GRONETIX Chatbot Solutions</h3>
+      <h3>GROWNETIX Chatbot Solutions</h3>
       <p>We implement AI chatbots that feel natural, solve problems instantly, and integrate with your existing systems. Our approach delivers working solutions in hours, not days or weeks—because every minute without support is a potential lost customer.</p>
     `
   }
