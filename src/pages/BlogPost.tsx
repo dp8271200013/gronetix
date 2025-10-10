@@ -1,8 +1,15 @@
 import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Calendar, Clock, ArrowLeft, ArrowRight } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Calendar, Clock, ArrowLeft, User, Mail } from "lucide-react";
 import { Link } from "react-router-dom";
+import blogAiAutomation from "@/assets/blog-ai-automation.jpg";
+import blogDigitalization from "@/assets/blog-digitalization.jpg";
+import blogWebsite from "@/assets/blog-website.jpg";
+import blogSocialMedia from "@/assets/blog-social-media.jpg";
+import blogStartupGrowth from "@/assets/blog-startup-growth.jpg";
+import blogChatbots from "@/assets/blog-chatbots.jpg";
 
 export const blogPosts = [
   {
@@ -12,6 +19,8 @@ export const blogPosts = [
     date: "Jan 15, 2025",
     readTime: "2 min read",
     category: "AI & Automation",
+    author: "GROWNETIX Team",
+    image: blogAiAutomation,
     content: `
       <h2>The AI Revolution for Small Business</h2>
       <p>Artificial Intelligence isn't just for tech giants anymore. Today's small businesses can harness the same powerful AI tools that Fortune 500 companies use, but without the enterprise price tag. Here are five game-changing ways AI automation can transform your business operations.</p>
@@ -42,6 +51,8 @@ export const blogPosts = [
     date: "Jan 10, 2025",
     readTime: "2 min read",
     category: "Digital Transformation",
+    author: "GROWNETIX Team",
+    image: blogDigitalization,
     content: `
       <h2>Why Digitalization Matters Now More Than Ever</h2>
       <p>Business digitalization isn't optional anymore—it's essential for survival. Companies that embrace digital transformation see an average of 20% higher profit margins than those that don't. Here's your complete roadmap.</p>
@@ -75,6 +86,8 @@ export const blogPosts = [
     date: "Jan 5, 2025",
     readTime: "2 min read",
     category: "Web Development",
+    author: "GROWNETIX Team",
+    image: blogWebsite,
     content: `
       <h2>Your Website: The Most Important Employee You'll Ever Hire</h2>
       <p>Think of your website as an employee that works 24/7, never calls in sick, and can serve thousands of customers simultaneously. Yet many small businesses treat it as an afterthought. Here's why that's a costly mistake.</p>
@@ -108,6 +121,8 @@ export const blogPosts = [
     date: "Dec 28, 2024",
     readTime: "2 min read",
     category: "Social Media",
+    author: "GROWNETIX Team",
+    image: blogSocialMedia,
     content: `
       <h2>The Social Media Struggle is Real</h2>
       <p>Posting consistently on social media feels like a full-time job. Between creating content, responding to comments, and analyzing results, it's easy to get overwhelmed. But what if you could maintain an active presence without spending hours daily? Enter social media automation.</p>
@@ -141,6 +156,8 @@ export const blogPosts = [
     date: "Dec 20, 2024",
     readTime: "2 min read",
     category: "Business Growth",
+    author: "GROWNETIX Team",
+    image: blogStartupGrowth,
     content: `
       <h2>The Right Tools at the Right Time</h2>
       <p>Startups that scale successfully have one thing in common: they invest in the right digital infrastructure early. Here are the essential tools that separate growing businesses from stagnant ones.</p>
@@ -177,6 +194,8 @@ export const blogPosts = [
     date: "Dec 15, 2024",
     readTime: "2 min read",
     category: "AI & Automation",
+    author: "GROWNETIX Team",
+    image: blogChatbots,
     content: `
       <h2>The Always-On Customer Service Revolution</h2>
       <p>Imagine never missing a customer inquiry, even at 3 AM. That's the power of AI chatbots—tireless, instant, and surprisingly human customer service that works around the clock.</p>
@@ -210,42 +229,89 @@ export const blogPosts = [
 
 const BlogPost = () => {
   const [selectedPost, setSelectedPost] = useState<typeof blogPosts[0] | null>(null);
+  const [email, setEmail] = useState("");
 
   if (selectedPost) {
     return (
-      <div className="min-h-screen pt-24">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      <div className="min-h-screen">
+        {/* Hero Image */}
+        <div className="relative h-[50vh] overflow-hidden">
+          <img 
+            src={selectedPost.image} 
+            alt={selectedPost.title}
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
+        </div>
+
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 -mt-32 relative z-10">
           <Button
             variant="ghost"
             onClick={() => setSelectedPost(null)}
-            className="mb-8"
+            className="mb-8 backdrop-blur-sm bg-card/80"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Blog
           </Button>
 
-          <article className="max-w-3xl mx-auto">
-            <div className="mb-6">
-              <span className="inline-block px-3 py-1 bg-primary/10 text-primary text-xs font-semibold rounded-full mb-4">
-                {selectedPost.category}
-              </span>
-              <h1 className="text-4xl sm:text-5xl font-bold mb-4">{selectedPost.title}</h1>
-              <div className="flex items-center space-x-4 text-muted-foreground text-sm">
-                <div className="flex items-center space-x-1">
-                  <Calendar className="h-4 w-4" />
-                  <span>{selectedPost.date}</span>
-                </div>
-                <div className="flex items-center space-x-1">
-                  <Clock className="h-4 w-4" />
-                  <span>{selectedPost.readTime}</span>
-                </div>
-              </div>
-            </div>
+          <article className="max-w-4xl mx-auto">
+            <Card className="bg-card/95 backdrop-blur-sm border-border mb-12">
+              <CardContent className="p-8 sm:p-12">
+                {/* Category Badge */}
+                <span className="inline-block px-4 py-2 bg-primary/10 text-primary text-sm font-semibold rounded-full mb-6">
+                  {selectedPost.category}
+                </span>
 
-            <div 
-              className="prose prose-lg max-w-none dark:prose-invert prose-headings:text-foreground prose-p:text-muted-foreground prose-a:text-primary prose-strong:text-foreground"
-              dangerouslySetInnerHTML={{ __html: selectedPost.content }}
-            />
+                {/* Title */}
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+                  {selectedPost.title}
+                </h1>
+
+                {/* Meta Info */}
+                <div className="flex flex-wrap items-center gap-6 text-muted-foreground text-sm mb-8 pb-8 border-b border-border">
+                  <div className="flex items-center space-x-2">
+                    <User className="h-4 w-4" />
+                    <span>{selectedPost.author}</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Calendar className="h-4 w-4" />
+                    <span>{selectedPost.date}</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Clock className="h-4 w-4" />
+                    <span>{selectedPost.readTime}</span>
+                  </div>
+                </div>
+
+                {/* Content */}
+                <div 
+                  className="prose prose-lg max-w-none dark:prose-invert 
+                    prose-headings:font-bold prose-headings:tracking-tight
+                    prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-6
+                    prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-4
+                    prose-p:text-muted-foreground prose-p:leading-relaxed prose-p:mb-6
+                    prose-a:text-primary prose-a:no-underline hover:prose-a:underline
+                    prose-strong:text-foreground prose-strong:font-semibold"
+                  dangerouslySetInnerHTML={{ __html: selectedPost.content }}
+                />
+
+                {/* CTA at bottom of article */}
+                <div className="mt-12 pt-8 border-t border-border">
+                  <div className="bg-gradient-to-br from-primary/10 via-accent/5 to-magenta/10 rounded-2xl p-8 text-center">
+                    <h3 className="text-2xl font-bold mb-4">Ready to Transform Your Business?</h3>
+                    <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
+                      Let's discuss how we can help you implement these solutions. 
+                      Book a free demo today.
+                    </p>
+                    <Link to="/contact">
+                      <Button variant="hero" size="lg">
+                        Book Your Free Demo
+                      </Button>
+                    </Link>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           </article>
         </div>
       </div>
@@ -261,57 +327,61 @@ const BlogPost = () => {
             Insights & <span className="text-gradient">Resources</span>
           </h1>
           <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto">
-            Stay informed with the latest trends, tips, and strategies for digital transformation 
-            and business growth.
+            Expert insights on digital transformation, automation, and business growth strategies 
+            that deliver results in hours, not days or weeks.
           </p>
         </div>
       </section>
 
-      {/* Blog Posts */}
+      {/* Blog Posts Grid */}
       <section className="py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {blogPosts.map((post, index) => (
+            {blogPosts.map((post) => (
               <Card
-                key={index}
-                className="group bg-card border-border hover:border-primary/50 transition-all duration-300 hover:shadow-xl hover:shadow-primary/10 flex flex-col cursor-pointer"
+                key={post.id}
+                className="group cursor-pointer bg-card border-border hover:border-primary/50 transition-all duration-300 hover:shadow-2xl hover:shadow-primary/10 overflow-hidden animate-fade-in"
                 onClick={() => setSelectedPost(post)}
               >
-                <CardContent className="p-6 flex flex-col flex-grow">
-                  <div className="mb-4">
-                    <span className="inline-block px-3 py-1 bg-primary/10 text-primary text-xs font-semibold rounded-full">
+                {/* Post Image */}
+                <div className="relative h-48 overflow-hidden">
+                  <img 
+                    src={post.image} 
+                    alt={post.title}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent" />
+                  
+                  {/* Category Badge on Image */}
+                  <div className="absolute top-4 left-4">
+                    <span className="inline-block px-3 py-1 bg-primary/90 backdrop-blur-sm text-primary-foreground text-xs font-semibold rounded-full">
                       {post.category}
                     </span>
                   </div>
+                </div>
 
-                  <h3 className="text-xl font-semibold mb-3 group-hover:text-primary transition-colors">
+                <CardContent className="p-6">
+                  {/* Title */}
+                  <h3 className="text-xl font-bold mb-3 line-clamp-2 group-hover:text-primary transition-colors">
                     {post.title}
                   </h3>
 
-                  <p className="text-muted-foreground mb-4 flex-grow">
+                  {/* Excerpt */}
+                  <p className="text-muted-foreground text-sm mb-4 line-clamp-3">
                     {post.excerpt}
                   </p>
 
-                  <div className="flex items-center justify-between text-sm text-muted-foreground pt-4 border-t border-border">
-                    <div className="flex items-center space-x-4">
-                      <div className="flex items-center space-x-1">
-                        <Calendar className="h-4 w-4" />
-                        <span>{post.date}</span>
-                      </div>
-                      <div className="flex items-center space-x-1">
-                        <Clock className="h-4 w-4" />
-                        <span>{post.readTime}</span>
-                      </div>
+                  {/* Meta Info */}
+                  <div className="flex items-center justify-between text-xs text-muted-foreground pt-4 border-t border-border">
+                    <div className="flex items-center space-x-1">
+                      <Calendar className="h-3 w-3" />
+                      <span>{post.date}</span>
+                    </div>
+                    <div className="flex items-center space-x-1">
+                      <Clock className="h-3 w-3" />
+                      <span>{post.readTime}</span>
                     </div>
                   </div>
-
-                  <Button
-                    variant="ghost"
-                    className="mt-4 group/btn w-full justify-between"
-                  >
-                    Read More
-                    <ArrowRight className="h-4 w-4 group-hover/btn:translate-x-1 transition-transform" />
-                  </Button>
                 </CardContent>
               </Card>
             ))}
@@ -322,20 +392,23 @@ const BlogPost = () => {
       {/* Newsletter Section */}
       <section className="py-20 bg-surface-dark">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <Card className="bg-gradient-to-br from-primary/10 via-card to-accent/10 border-primary/20">
+          <Card className="max-w-3xl mx-auto bg-gradient-to-br from-primary/10 via-card to-accent/10 border-primary/20">
             <CardContent className="p-12 text-center">
+              <Mail className="h-12 w-12 text-primary mx-auto mb-6" />
               <h2 className="text-3xl sm:text-4xl font-bold mb-4">
                 Stay Updated
               </h2>
-              <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-                Subscribe to our newsletter for the latest insights on digital transformation, 
-                AI automation, and business growth strategies.
+              <p className="text-lg text-muted-foreground mb-8">
+                Get the latest insights on automation, digital transformation, and business growth 
+                delivered straight to your inbox.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-                <input
+                <Input
                   type="email"
                   placeholder="Enter your email"
-                  className="flex-1 px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="flex-1"
                 />
                 <Button variant="hero" size="lg">
                   Subscribe

@@ -173,3 +173,31 @@ All colors MUST be HSL.
     box-shadow: 0 0 40px hsl(var(--glow-purple) / 0.6), 0 0 60px hsl(var(--glow-purple) / 0.3);
   }
 }
+
+/* Page Transitions */
+.page-transition {
+  animation-duration: 0.3s;
+  animation-fill-mode: both;
+}
+
+.page-transition.fadeOut {
+  animation-name: fadeOut;
+}
+
+.page-transition.fadeIn {
+  animation-name: fadeIn;
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* Radial Gradient Utility */
+.bg-gradient-radial {
+  background: radial-gradient(circle, var(--tw-gradient-stops));
+}

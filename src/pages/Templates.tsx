@@ -2,6 +2,12 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Stethoscope, Coffee, Store, Scissors, Dumbbell, Briefcase, ArrowRight } from "lucide-react";
+import templateMedical from "@/assets/template-medical-clinic.jpg";
+import templateCafe from "@/assets/template-cafe-restaurant.jpg";
+import templateShop from "@/assets/template-local-shop.jpg";
+import templateSalon from "@/assets/template-salon-spa.jpg";
+import templateFitness from "@/assets/template-fitness-studio.jpg";
+import templateProfessional from "@/assets/template-professional-services.jpg";
 
 const Templates = () => {
   const templates = [
@@ -9,6 +15,7 @@ const Templates = () => {
       icon: Stethoscope,
       title: "Medical Clinic",
       description: "Deliver results in hours, not days or weeks",
+      image: templateMedical,
       features: [
         "Online appointment booking system",
         "Patient portal with medical records",
@@ -21,6 +28,7 @@ const Templates = () => {
       icon: Coffee,
       title: "Cafe & Restaurant",
       description: "Deliver results in hours, not days or weeks",
+      image: templateCafe,
       features: [
         "Online ordering & delivery integration",
         "Menu management system",
@@ -33,6 +41,7 @@ const Templates = () => {
       icon: Store,
       title: "Local Shop",
       description: "Deliver results in hours, not days or weeks",
+      image: templateShop,
       features: [
         "E-commerce storefront",
         "Inventory management system",
@@ -45,6 +54,7 @@ const Templates = () => {
       icon: Scissors,
       title: "Salon & Spa",
       description: "Deliver results in hours, not days or weeks",
+      image: templateSalon,
       features: [
         "Booking & scheduling system",
         "Client management database",
@@ -57,6 +67,7 @@ const Templates = () => {
       icon: Dumbbell,
       title: "Fitness Studio",
       description: "Deliver results in hours, not days or weeks",
+      image: templateFitness,
       features: [
         "Class booking & membership management",
         "Workout tracking & progress monitoring",
@@ -69,6 +80,7 @@ const Templates = () => {
       icon: Briefcase,
       title: "Professional Services",
       description: "Deliver results in hours, not days or weeks",
+      image: templateProfessional,
       features: [
         "Client portal & project tracking",
         "Automated proposal generation",
@@ -103,20 +115,35 @@ const Templates = () => {
               return (
                 <Card
                   key={index}
-                  className="group bg-card border-border hover:border-primary/50 transition-all duration-300 hover:shadow-xl hover:shadow-primary/10"
+                  className="group bg-card border-border hover:border-primary/50 transition-all duration-300 hover:shadow-xl hover:shadow-primary/10 overflow-hidden animate-fade-in"
                 >
-                  <CardContent className="p-8">
-                    <div className="flex items-center space-x-4 mb-6">
-                      <div className="w-14 h-14 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/20 transition-colors glow-blue">
-                        <Icon className="h-7 w-7 text-primary" />
+                  {/* Template Image */}
+                  <div className="relative h-56 overflow-hidden">
+                    <img 
+                      src={template.image} 
+                      alt={`${template.title} template preview`}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-card via-card/50 to-transparent" />
+                    
+                    {/* Icon Badge */}
+                    <div className="absolute top-4 right-4">
+                      <div className="w-12 h-12 bg-primary/90 backdrop-blur-sm rounded-lg flex items-center justify-center glow-blue">
+                        <Icon className="h-6 w-6 text-primary-foreground" />
                       </div>
-                      <h3 className="text-2xl font-semibold">{template.title}</h3>
                     </div>
+                  </div>
 
+                  <CardContent className="p-8">
+                    {/* Title */}
+                    <h3 className="text-2xl font-semibold mb-3">{template.title}</h3>
+
+                    {/* Description */}
                     <p className="text-primary font-semibold mb-6 text-sm">
                       {template.description}
                     </p>
 
+                    {/* Features List */}
                     <div className="space-y-3 mb-8">
                       {template.features.map((feature, idx) => (
                         <div key={idx} className="flex items-start space-x-3">
@@ -128,6 +155,7 @@ const Templates = () => {
                       ))}
                     </div>
 
+                    {/* CTA Button */}
                     <Link to="/contact">
                       <Button variant="outline" className="w-full group/btn">
                         Get Started

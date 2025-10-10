@@ -10,10 +10,10 @@ const Navbar = () => {
 
   const links = [
     { name: "Home", path: "/" },
-    { name: "About", path: "/about" },
     { name: "Services", path: "/services" },
     { name: "Blog", path: "/blog" },
     { name: "Templates", path: "/templates" },
+    { name: "About", path: "/about" },
   ];
 
   const isActive = (path: string) => location.pathname === path;

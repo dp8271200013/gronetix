@@ -56,19 +56,6 @@ const Services = () => {
       ],
       image: aiAutomation,
     },
-    {
-      icon: Zap,
-      title: "Business Digitalization",
-      description: "Complete digital transformation solutions tailored to your business. Modernize your operations from end to end.",
-      features: [
-        "Process automation",
-        "Digital workflow design",
-        "Cloud migration",
-        "Data management",
-        "System integration",
-      ],
-      image: webDev,
-    },
   ];
 
   const additionalServices = [

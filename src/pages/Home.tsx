@@ -36,7 +36,7 @@ const Home = () => {
     <div className="min-h-screen">
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        {/* Background Image with Overlay */}
+        {/* Background Image with Enhanced Overlay */}
         <div
           className="absolute inset-0 z-0"
           style={{
@@ -45,11 +45,14 @@ const Home = () => {
             backgroundPosition: "center",
           }}
         >
-          <div className="absolute inset-0 bg-gradient-to-b from-background/90 via-background/80 to-background" />
+          {/* Theme-aware enhanced overlay with vignette */}
+          <div className="absolute inset-0 bg-gradient-to-b from-background/95 via-background/90 to-background dark:from-background/98 dark:via-background/95 dark:to-background" />
+          <div className="absolute inset-0 bg-gradient-radial from-transparent via-transparent to-background/50" />
         </div>
 
-        {/* Hero Content */}
+        {/* Hero Content with backdrop blur */}
         <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8 py-32 text-center animate-fade-in">
+          <div className="backdrop-blur-sm bg-background/5 dark:bg-background/10 rounded-3xl p-8 inline-block">
           <div className="inline-block mb-6 px-4 py-2 bg-primary/10 border border-primary/20 rounded-full glow-purple">
             <span className="text-primary text-sm font-semibold">CREATE. AUTOMATE. SCALE.</span>
           </div>
@@ -94,6 +97,7 @@ const Home = () => {
               <div className="text-3xl sm:text-4xl font-bold text-gradient mb-2">24/7</div>
               <div className="text-sm text-muted-foreground">Support</div>
             </div>
+          </div>
           </div>
         </div>
       </section>
