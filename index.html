@@ -58,76 +58,158 @@
     <script type="module" src="/src/main.tsx"></script>
     <!-- COPY THIS EXACT BLOCK and paste into your page (see step 2) -->
 <script>
+/*
+  Smart form listener for React sites.
+  - Waits up to 15s for a form to appear.
+  - Auto-detects Name, Email, Message fields using ids, names, types, placeholders, labels, or position.
+  - Sends urlencoded POST to your Apps Script webapp (avoids CORS preflight).
+  - Logs useful messages in Console for debugging.
+*/
+(function(){
   const webappURL = "https://script.google.com/macros/s/AKfycbz5PBhpTNPJJGEwYxa6Ae272rVO9EiWPJJ_HjzOT9AT6S4hCrxz1zAWiBnN7voOYnO1tw/exec";
   const secret = "GronetixSecret!2025";
+  const MAX_WAIT_MS = 15000;
+  const POLL_INTERVAL_MS = 400;
 
-  function getFieldValue(...idsOrNames) {
-    for (let key of idsOrNames) {
-      // try id
-      const elById = document.getElementById(key);
-      if (elById && ('value' in elById)) return elById.value.trim();
-      // try name
-      const elsByName = document.getElementsByName(key);
-      if (elsByName && elsByName.length && ('value' in elsByName[0])) {
-        return elsByName[0].value.trim();
-      }
+  function log(...args){ console.log('[Gronetix-sheet]', ...args); }
+
+  function findLikelyFields(form) {
+    const inputs = Array.from(form.querySelectorAll('input, textarea, [contenteditable="true"]'));
+    // Try to locate by common ids/names/placeholder/labels
+    const fields = { name: null, email: null, message: null };
+
+    const tryMatch = (el, patterns) => {
+      if (!el) return false;
+      const attrs = (el.id || '') + ' ' + (el.name || '') + ' ' + (el.placeholder || '') + ' ' + (el.getAttribute('aria-label') || '');
+      const label = (() => {
+        const id = el.id;
+        if (!id) return '';
+        const lab = form.querySelector('label[for="' + id + '"]');
+        return lab ? lab.textContent : '';
+      })();
+      const txt = (attrs + ' ' + label).toLowerCase();
+      return patterns.some(p => txt.indexOf(p) !== -1);
+    };
+
+    // first pass: exact matches
+    for (const el of inputs) {
+      if (!fields.email && (tryMatch(el, ['email', 'e-mail']) || el.type === 'email')) fields.email = el;
+      if (!fields.message && (el.tagName.toLowerCase() === 'textarea' || tryMatch(el, ['message','msg','comments','enquiry','enquiry','your message']))) fields.message = el;
+      if (!fields.name && (tryMatch(el, ['name','full name','your name','fullname']) )) fields.name = el;
     }
-    return "";
+
+    // second pass: heuristics by position
+    if (!fields.name && inputs[0]) fields.name = inputs[0];
+    if (!fields.email) {
+      const maybe = inputs.find(i => i.type === 'email') || inputs.find(i => /@/.test((i.value || '')) );
+      if (maybe) fields.email = maybe;
+      else fields.email = inputs[1] || inputs.find(i => i !== fields.name);
+    }
+    if (!fields.message) {
+      fields.message = inputs.find(i => i.tagName.toLowerCase() === 'textarea') || inputs[inputs.length -1];
+    }
+
+    // final sanity: ensure we return elements (or nulls)
+    return {
+      nameEl: fields.name || null,
+      emailEl: fields.email || null,
+      messageEl: fields.message || null
+    };
   }
 
-  async function postToSheet(dataObj) {
-    dataObj.secret = secret;
+  async function postToSheetObj(obj) {
+    obj.secret = secret;
     const params = new URLSearchParams();
-    for (const k in dataObj) {
-      if (Object.prototype.hasOwnProperty.call(dataObj, k)) {
-        params.append(k, dataObj[k] === undefined ? "" : dataObj[k]);
-      }
-    }
-    const resp = await fetch(webappURL, {
+    for (const k in obj) params.append(k, obj[k] === undefined ? '' : obj[k]);
+    const res = await fetch(webappURL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: params.toString()
     });
-    return resp.json();
+    return res.json();
   }
 
-  document.addEventListener('DOMContentLoaded', () => {
-    // try to find the form: prefer id 'demoForm' else first <form>
-    let form = document.getElementById('demoForm') || document.querySelector('form');
-    if (!form) {
-      console.warn('No form found on the page. Ensure a <form> exists.');
-      return;
-    }
+  function attachHandler(form) {
+    if (form._gronetixAttached) return;
+    form._gronetixAttached = true;
+    log('Form found — attaching submit handler.');
 
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
+    const { nameEl, emailEl, messageEl } = findLikelyFields(form);
+    log('Detected fields:', {
+      nameId: nameEl ? (nameEl.id || nameEl.name || nameEl.placeholder) : null,
+      emailId: emailEl ? (emailEl.id || emailEl.name || emailEl.placeholder) : null,
+      messageId: messageEl ? (messageEl.id || messageEl.name || messageEl.placeholder || messageEl.tagName) : null
+    });
 
-      // read fields — tries several common ids/names
-      const data = {
-        name: getFieldValue('Name', 'name', 'fullName', 'full_name'),
-        email: getFieldValue('Email', 'email', 'emailAddress'),
-        message: getFieldValue('Message', 'message', 'msg', 'comments'),
-        source: window.location.href
-      };
-
-      // If you use EmailJS and want to send the email too, call it here (before/after):
-      // await emailjs.send('YOUR_SERVICE_ID','YOUR_TEMPLATE_ID', data);
-
+    form.addEventListener('submit', async function(e){
       try {
-        const json = await postToSheet(data);
-        console.log('sheet response', json);
+        e.preventDefault();
+        const name = nameEl ? (nameEl.value || nameEl.textContent || '') : '';
+        const email = emailEl ? (emailEl.value || emailEl.textContent || '') : '';
+        const message = messageEl ? (messageEl.value || messageEl.textContent || '') : '';
+
+        const data = {
+          name: (typeof name === 'string' ? name.trim() : ''),
+          email: (typeof email === 'string' ? email.trim() : ''),
+          message: (typeof message === 'string' ? message.trim() : ''),
+          source: window.location.href
+        };
+
+        log('Submitting data to sheet:', data);
+        const json = await postToSheetObj(data);
+        log('sheet response', json);
         if (json && json.status === 'ok') {
-          alert('Demo booked — saved to Google Sheet.');
-          form.reset();
+          // Keep behaviour minimal: if there's a success UI from the site, we don't override it.
+          try { alert('Demo booked — saved to Google Sheet.'); } catch(e){}
+          form.reset && form.reset();
         } else {
           alert('Saved but sheet returned error: ' + (json && json.message ? json.message : 'unknown'));
         }
       } catch (err) {
-        console.error('Error posting to sheet', err);
+        console.error('[Gronetix-sheet] Submit error', err);
         alert('Network error saving booking — try again.');
       }
-    });
-  });
+    }, {passive: false});
+  }
+
+  function tryAttachToForms() {
+    const forms = Array.from(document.querySelectorAll('form'));
+    if (!forms.length) return false;
+    // Prefer form with inputs/textareas and likely labels
+    for (const f of forms) {
+      const inputs = f.querySelectorAll('input, textarea, [contenteditable="true"]');
+      if (inputs.length >= 1) {
+        attachHandler(f);
+        return true;
+      }
+    }
+    return false;
+  }
+
+  // poll for the form (good for React apps)
+  let waited = 0;
+  const poll = setInterval(() => {
+    if (tryAttachToForms()) {
+      log('Handler attached to form.');
+      clearInterval(poll);
+      return;
+    }
+    waited += POLL_INTERVAL_MS;
+    if (waited >= MAX_WAIT_MS) {
+      clearInterval(poll);
+      log('No form found within', MAX_WAIT_MS, 'ms. If your form appears after user interaction, provide the <form> HTML or input ids and I will adapt the script.');
+    } else {
+      // keep waiting
+    }
+  }, POLL_INTERVAL_MS);
+
+  // also attempt immediate attach (in case DOM ready)
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    tryAttachToForms();
+  } else {
+    document.addEventListener('DOMContentLoaded', tryAttachToForms);
+  }
+})();
 </script>
   </body>
 </html>
