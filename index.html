@@ -56,5 +56,78 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <!-- COPY THIS EXACT BLOCK and paste into your page (see step 2) -->
+<script>
+  const webappURL = "https://script.google.com/macros/s/AKfycbz5PBhpTNPJJGEwYxa6Ae272rVO9EiWPJJ_HjzOT9AT6S4hCrxz1zAWiBnN7voOYnO1tw/exec";
+  const secret = "GronetixSecret!2025";
+
+  function getFieldValue(...idsOrNames) {
+    for (let key of idsOrNames) {
+      // try id
+      const elById = document.getElementById(key);
+      if (elById && ('value' in elById)) return elById.value.trim();
+      // try name
+      const elsByName = document.getElementsByName(key);
+      if (elsByName && elsByName.length && ('value' in elsByName[0])) {
+        return elsByName[0].value.trim();
+      }
+    }
+    return "";
+  }
+
+  async function postToSheet(dataObj) {
+    dataObj.secret = secret;
+    const params = new URLSearchParams();
+    for (const k in dataObj) {
+      if (Object.prototype.hasOwnProperty.call(dataObj, k)) {
+        params.append(k, dataObj[k] === undefined ? "" : dataObj[k]);
+      }
+    }
+    const resp = await fetch(webappURL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: params.toString()
+    });
+    return resp.json();
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    // try to find the form: prefer id 'demoForm' else first <form>
+    let form = document.getElementById('demoForm') || document.querySelector('form');
+    if (!form) {
+      console.warn('No form found on the page. Ensure a <form> exists.');
+      return;
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // read fields — tries several common ids/names
+      const data = {
+        name: getFieldValue('Name', 'name', 'fullName', 'full_name'),
+        email: getFieldValue('Email', 'email', 'emailAddress'),
+        message: getFieldValue('Message', 'message', 'msg', 'comments'),
+        source: window.location.href
+      };
+
+      // If you use EmailJS and want to send the email too, call it here (before/after):
+      // await emailjs.send('YOUR_SERVICE_ID','YOUR_TEMPLATE_ID', data);
+
+      try {
+        const json = await postToSheet(data);
+        console.log('sheet response', json);
+        if (json && json.status === 'ok') {
+          alert('Demo booked — saved to Google Sheet.');
+          form.reset();
+        } else {
+          alert('Saved but sheet returned error: ' + (json && json.message ? json.message : 'unknown'));
+        }
+      } catch (err) {
+        console.error('Error posting to sheet', err);
+        alert('Network error saving booking — try again.');
+      }
+    });
+  });
+</script>
   </body>
 </html>
