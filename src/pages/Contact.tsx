@@ -33,14 +33,14 @@ const Contact = () => {
     try {
       const validatedData = contactFormSchema.parse(formData);
 
-      // Save to demo_requests table
+      // Save to "book a demo#1" table
       const { error: dbError } = await supabase
-        .from("demo_requests")
+        .from("book a demo#1")
         .insert([{
-          name: validatedData.name,
-          email: validatedData.email,
-          company: validatedData.company || null,
-          message: validatedData.message,
+          Name: validatedData.name,
+          Email: validatedData.email,
+          Company: validatedData.company || null,
+          Message: validatedData.message,
         }]);
 
       if (dbError) {
