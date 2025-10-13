@@ -28,13 +28,27 @@ const Contact = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Validate form data with Zod
     try {
       const validatedData = contactFormSchema.parse(formData);
 
+      // Save to demo_requests table
+      const { error: dbError } = await supabase
+        .from("demo_requests")
+        .insert([{
+          name: validatedData.name,
+          email: validatedData.email,
+          company: validatedData.company || null,
+          message: validatedData.message,
+        }]);
+
+      if (dbError) {
+        throw dbError;
+      }
+
       // Send email via edge function
-      const { error } = await supabase.functions.invoke("send-contact-email", {
+      const { error: emailError } = await supabase.functions.invoke("send-contact-email", {
         body: {
           name: validatedData.name,
           email: validatedData.email,
@@ -43,8 +57,8 @@ const Contact = () => {
         },
       });
 
-      if (error) {
-        throw error;
+      if (emailError) {
+        console.error("Email sending error:", emailError);
       }
 
       setShowSuccess(true);
