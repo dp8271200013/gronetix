@@ -27,7 +27,7 @@ const Navbar = () => {
             <img
               src="/favicon.png"
               alt="GROWNETIX logo"
-              className="h-6 w-6 mr-2 rounded"
+              className="h-6 w-6 mr-2"
             />
             <span className="text-xl font-bold group-hover:text-primary transition-colors">GROWNETIX</span>
           </Link>

@@ -60,7 +60,7 @@ const Home = () => {
               <img
                 src="/favicon.png"
                 alt="GROWNETIX logo"
-                className="h-12 w-12 rounded"
+                className="h-12 w-12"
               />
             </div>
           
