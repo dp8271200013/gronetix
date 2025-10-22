@@ -24,11 +24,6 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-16">
           {/* Brand */}
           <Link to="/" className="flex items-center group">
-            <img
-              src="/favicon.png"
-              alt="GROWNETIX logo"
-              className="h-6 w-6 mr-2"
-            />
             <span className="text-xl font-bold group-hover:text-primary transition-colors">GROWNETIX</span>
           </Link>
 
