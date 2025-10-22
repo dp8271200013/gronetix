@@ -1,12 +1,17 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Mail, Phone, MapPin, Send, CheckCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
 import { z } from "zod";
+import emailjs from '@emailjs/browser'; // EmailJS import
+
+// EmailJS Configuration (using your provided keys)
+const EMAILJS_SERVICE_ID = 'service_0xaetru';
+const EMAILJS_TEMPLATE_ID = 'template_wy2i6gu';
+const EMAILJS_PUBLIC_KEY = 'NiI6GqhRlGkMXQbaI';
 
 // Zod validation schema
 const contactFormSchema = z.object({
@@ -26,6 +31,12 @@ const Contact = () => {
     message: "",
   });
 
+  // Initialize EmailJS on mount
+  useEffect(() => {
+    emailjs.init(EMAILJS_PUBLIC_KEY);
+    console.log('EmailJS initialized with public key:', EMAILJS_PUBLIC_KEY); // Debug log
+  }, []);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -33,33 +44,35 @@ const Contact = () => {
     try {
       const validatedData = contactFormSchema.parse(formData);
 
-      // Save to "book a demo#1" table
-      const { error: dbError } = await supabase
-        .from("book a demo#1")
-        .insert([{
-          Name: validatedData.name,
-          Email: validatedData.email,
-          Company: validatedData.company || null,
-          Message: validatedData.message,
-        }]);
+      // Send email via EmailJS
+      const emailParams = {
+        from_name: validatedData.name,
+        from_email: validatedData.email,
+        company: validatedData.company || '',
+        message: validatedData.message,
+      };
 
-      if (dbError) {
-        throw dbError;
+      console.log('Sending EmailJS with params:', emailParams); // Debug log
+
+      const emailResult = await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        emailParams
+      );
+
+      console.log('EmailJS Response:', emailResult); // Debug: Full response
+
+      if (emailResult.status !== 200) {
+        console.error("EmailJS sending error:", emailResult);
+        toast({
+          title: "Email Failed",
+          description: "We couldn't send the email. Check console for details.",
+          variant: "destructive",
+        });
+        return; // Don't show success
       }
 
-      // Send email via edge function
-      const { error: emailError } = await supabase.functions.invoke("send-contact-email", {
-        body: {
-          name: validatedData.name,
-          email: validatedData.email,
-          company: validatedData.company || undefined,
-          message: validatedData.message,
-        },
-      });
-
-      if (emailError) {
-        console.error("Email sending error:", emailError);
-      }
+      console.log('EmailJS sent successfully!'); // Debug success
 
       setShowSuccess(true);
       setTimeout(() => setShowSuccess(false), 5000);
@@ -77,6 +90,7 @@ const Contact = () => {
         description: "Your message has been sent. We'll contact you within 24 hours.",
       });
     } catch (error) {
+      console.error("Full form submission error:", error); // Enhanced logging
       if (error instanceof z.ZodError) {
         // Handle validation errors
         const firstError = error.errors[0];
