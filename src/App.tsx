@@ -14,6 +14,7 @@ import Templates from "./pages/Templates";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 import { useEffect } from "react";
+import ContactForm from "@/components/ContactForm";
 
 const queryClient = new QueryClient();
 
@@ -39,7 +40,7 @@ const App = () => (
             <Navbar />
             <main className="flex-grow">
               <Routes>
-                <Route path="/" element={<Home />} />
+                <Route path="/" element={<><Home /><ContactForm /></>} />
                 <Route path="/about" element={<About />} />
                 <Route path="/services" element={<Services />} />
                 <Route path="/blog" element={<BlogPost />} />
