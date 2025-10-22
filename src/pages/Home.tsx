@@ -56,13 +56,7 @@ const Home = () => {
           <div className="inline-block mb-6 px-4 py-2 bg-primary/10 border border-primary/20 rounded-full glow-purple">
             <span className="text-primary text-sm font-semibold">CREATE. AUTOMATE. SCALE.</span>
           </div>
-            <div className="flex justify-center mb-6">
-              <img
-                src="/favicon.png"
-                alt="GROWNETIX logo"
-                className="h-12 w-12"
-              />
-            </div>
+            
           
           <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-6 leading-tight">
             Scale your small business —
